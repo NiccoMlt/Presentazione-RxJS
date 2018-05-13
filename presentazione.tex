@@ -1,0 +1,111 @@
+%% Direttive TeXworks:
+% !TeX root = ./presentazione.tex
+% !TEX encoding = UTF-8 Unicode
+% !TEX program = arara
+% !TEX TS-program = arara
+% !TeX spellcheck = it-IT
+
+% arara: clean: { files: [ presentazione.aux, presentazione.log, presentazione.nav, presentazione.out, presentazione.snm, presentazione.toc, presentazione.xmpdata, pdfa.xmpi ] }
+% arara: pdflatex: { synctex: yes, action: batchmode, options: "-halt-on-error -file-line-error-style" }
+% arara: pdflatex: { synctex: yes, action: nonstopmode, options: "-halt-on-error -file-line-error-style" }
+
+%% Genera un file report.xmpdata con i dati di titolo e autore per il formato PDF/A %%
+\begin{filecontents*}{\jobname.xmpdata}
+\Title{RxJS: Reactive Extensions For JavaScript}
+\Author{Niccolò Maltoni}
+\Copyright{Copyright \copyright 2018, Niccolò Maltoni}
+\CopyrightURL{http://creativecommons.org/licenses/by-nc-sa/3.0/it/}
+\Keywords{RxJS\sep ReactiveX\sep JavaScript\sep JS}
+\end{filecontents*}
+\documentclass{beamer}
+
+%% ORDINE IMPORTANTE INIZIO %%%%%%%%%%%%
+\usepackage[T1]{fontenc}        % serve per impostare la codifica di output del font
+\usepackage{textcomp}           % serve per fornire supporto ai Text Companion fonts
+\usepackage[utf8]{inputenc}     % serve per impostare la codifica di input del font
+\usepackage[
+    english,        % utilizza l'inglese come lingua secondaria
+    italian         % utilizza l'italiano come lingua primaria
+]{babel}                        % serve per scrivere Indice, Capitolo, etc in Italiano
+\usepackage{lmodern}            % carica una variante Latin Modern prodotto dal GUST
+%% ORDINE IMPORTANTE FINE %%%%%%%%%%%%%%
+
+\usepackage{xcolor}             % serve per la gestione dei colori nel testo
+\usepackage{graphicx}           % serve per includere immagini e grafici
+
+\usepackage[%
+    strict,             % rende tutti gli warning degli errori
+    autostyle,          % imposta lo stile in base al linguaggio specificato in babel
+    english=american,   % imposta lo stile per l'inglese
+    italian=guillemets  % imposta lo stile per l'italiano
+]{csquotes}                     % serve a impostare lo stile delle virgolette
+
+\setcounter{secnumdepth}{2}     % Numera fino alla sottosezione nel corpo del testo
+\setcounter{tocdepth}{3}        % Numera fino alla sotto-sottosezione nell'indice
+
+\graphicspath{{img/}}
+
+\usepackage[%
+    depth=3,            % equivale a bookmarksdepth di hyperref
+    open=false,         % equivale a bookmarksopen di hyperref
+    numbered=true       % equivale a bookmarksnumbered di hyperref
+]{bookmark}                     % Gestisce i segnalibri meglio di hyperref
+\usepackage{hyperref}           % Gestisce tutte le cose ipertestuali del pdf
+\hypersetup{%
+    pdfpagemode={UseNone},
+    hidelinks,          % nasconde i collegamenti (non vengono quadrettati)
+    hypertexnames=false,
+    linktoc=all,        % inserisce i link nell'indice
+    plainpages=false,
+    breaklinks,
+    bookmarks=true,
+    pdfstartview={Fit},
+    unicode=true,       % only Latin characters in Acrobat's bookmarks
+    pdftoolbar=false,   % show Acrobat's toolbar?
+    pdfmenubar=false,   % show Acrobat's menu?
+    plainpages=false
+}
+\usepackage[pdf15,a-1b]{pdfx}
+
+\usetheme{Boadilla}             % serve per scegliere il layout generale dei frame
+\usecolortheme{beaver}          % Per il colore va comunque bene questo
+\setbeamerfont{block title}{size=\normalsize}
+\setbeamerfont{block body}{size=\small}
+
+%% Permette di inserire l'outline prima di ogni sezione
+\AtBeginSection[]{%
+    \begin{frame}<beamer>
+        \frametitle{Outline}
+        \tableofcontents[currentsection]
+    \end{frame}
+}
+
+\title[RxJS]{%
+    ReactiveX RxJS
+}
+\subtitle{Reactive Extensions For JavaScript}
+
+\author[Niccolò~Maltoni]{\large{Niccolò~Maltoni}\\\medskip\small{0000840825}}
+
+% \date{30 maggio 2018}
+% \institute[]{%
+    % Alma Mater Studiorum - Università di Bologna\\%
+    % Campus di Cesena%
+% }
+% \titlegraphic{\includegraphics{Rx_Logo}}
+
+\date[30 maggio 2018]{}
+\institute[]{%
+    \includegraphics{Rx_Logo}\\%
+    \bigskip%
+    \small{%
+        Alma Mater Studiorum - Università di Bologna\\%
+        Campus di Cesena%
+    }
+}
+
+\begin{document}
+    \begin{frame}
+        \titlepage
+    \end{frame}
+\end{document}
