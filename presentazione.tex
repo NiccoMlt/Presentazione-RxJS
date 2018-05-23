@@ -5,12 +5,16 @@
 % !TEX TS-program = arara
 % !TeX spellcheck = it-IT
 
-%! arara: clean: { files: [ arara.log, presentazione.aux, presentazione.log, presentazione.nav, presentazione.out, presentazione.snm, presentazione.toc, presentazione.xmpdata, pdfa.xmpi ] }
-% arara: clean: { files: [ arara.log, presentazione.log ] }
+%! arara: clean: { files: [ arara.log, presentazione.aux, presentazione.log, presentazione.nav, presentazione.out, presentazione.snm, presentazione.toc, presentazione.xmpdata, pdfa.xmpi, presentazione.pdf ] }
+% arara: clean: { files: [ arara.log, presentazione.log, presentazione.pdf ] }
+% arara: pdflatex: { synctex: yes, action: batchmode, options: "-halt-on-error -file-line-error-style" }
+% arara: biber
 % arara: pdflatex: { synctex: yes, action: batchmode, options: "-halt-on-error -file-line-error-style" }
 % arara: pdflatex: { synctex: yes, action: nonstopmode, options: "-halt-on-error -file-line-error-style" }
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Genera un file report.xmpdata con i dati di titolo e autore per il formato PDF/A %%
+\IfFileExists{\jobname.xmpdata}{}{%
 \begin{filecontents*}{\jobname.xmpdata}
 \Title{RxJS: Reactive Extensions For JavaScript}
 \Author{Niccolò Maltoni}
@@ -18,20 +22,20 @@
 \CopyrightURL{http://creativecommons.org/licenses/by-nc-sa/3.0/it/}
 \Keywords{RxJS\sep ReactiveX\sep JavaScript\sep JS}
 \end{filecontents*}
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \documentclass{beamer}
 
-%% ORDINE IMPORTANTE INIZIO %%%%%%%%%%%%
 \usepackage[T1]{fontenc}        % serve per impostare la codifica di output del font
 \usepackage{textcomp}           % serve per fornire supporto ai Text Companion fonts
-\usepackage[utf8]{inputenc}     % serve per impostare la codifica di input del font
+ \usepackage[utf8]{inputenc}     % serve per impostare la codifica di input del font
 \usepackage[
-    english,        % utilizza l'inglese come lingua secondaria
-    italian         % utilizza l'italiano come lingua primaria
+    english,            % utilizza l'inglese come lingua secondaria
+    italian             % utilizza l'italiano come lingua primaria
 ]{babel}                        % serve per scrivere Indice, Capitolo, etc in Italiano
 \usepackage{lmodern}            % carica una variante Latin Modern prodotto dal GUST
 %% ORDINE IMPORTANTE FINE %%%%%%%%%%%%%%
 
-\usepackage{xcolor}             % serve per la gestione dei colori nel testo
 \usepackage{graphicx}           % serve per includere immagini e grafici
 
 \usepackage[%
@@ -40,6 +44,19 @@
     english=american,   % imposta lo stile per l'inglese
     italian=guillemets  % imposta lo stile per l'italiano
 ]{csquotes}                     % serve a impostare lo stile delle virgolette
+
+%\usepackage{silence}
+
+\usepackage[%
+    maxcitenames=2,     % massimo numero di nomi nelle citazioni
+    mincitenames=2,     % minimo numero di nomi nelle citazioni
+    maxbibnames=99,     % massimo numero di nomi nella blibliografia
+    minbibnames=99,     % minimo numero di nomi nella blibliografia
+    style=numeric,
+    giveninits=true,
+    backend=biber       % specifica il backend per la bibliografia
+]{biblatex}                     % si interfaccia con bibtex e biber per la bibliografia
+\addbibresource{biblio.bib}
 
 \setcounter{secnumdepth}{2}     % Numera fino alla sottosezione nel corpo del testo
 \setcounter{tocdepth}{3}        % Numera fino alla sotto-sottosezione nell'indice
@@ -59,7 +76,6 @@
     linktoc=all,        % inserisce i link nell'indice
     plainpages=false,
     breaklinks,
-    bookmarks=true,
     pdfstartview={Fit},
     unicode=true,       % only Latin characters in Acrobat's bookmarks
     pdftoolbar=false,   % show Acrobat's toolbar?
@@ -73,7 +89,7 @@
 \setbeamerfont{block title}{size=\normalsize}
 \setbeamerfont{block body}{size=\small}
 
-%% Permette di inserire l'outline prima di ogni sezione
+%% Permette di inserire l'outline prima di ogni sezione %%
 \AtBeginSection[]{%
     \begin{frame}<beamer>
         \frametitle{Outline}
@@ -81,32 +97,61 @@
     \end{frame}
 }
 
-\title[RxJS]{%
-    ReactiveX RxJS
-}
+%% Permette di inserire automaticamente titolo e sottotitolo %%
+% \addtobeamertemplate{frametitle}{
+%    \let\insertframetitle\insertsectionhead}{}
+% \addtobeamertemplate{frametitle}{
+%    \let\insertframesubtitle\insertsubsectionhead}{}
+
+% \makeatletter
+%   \CheckCommand*\beamer@checkframetitle{\@ifnextchar\bgroup\beamer@inlineframetitle{}}
+%   \renewcommand*\beamer@checkframetitle{\global\let\beamer@frametitle\relax\@ifnextchar\bgroup\beamer@inlineframetitle{}}
+% \makeatother
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% Titolo %%
+\title[RxJS]{ReactiveX RxJS}
 \subtitle{Reactive Extensions For JavaScript}
-
-\author[Niccolò~Maltoni]{\large{Niccolò~Maltoni}\\\medskip\small{0000840825}}
-
-% \date{30 maggio 2018}
-% \institute[]{%
-    % Alma Mater Studiorum - Università di Bologna\\%
-    % Campus di Cesena%
-% }
-% \titlegraphic{\includegraphics{Rx_Logo}}
-
+\author[Niccolò~Maltoni]{\large{Niccolò~Maltoni}}
 \date[30 maggio 2018]{}
-\institute[]{%
-    \includegraphics{Rx_Logo}\\%
-    \bigskip%
-    \small{%
-        Alma Mater Studiorum - Università di Bologna\\%
-        Campus di Cesena%
-    }
-}
+\institute[0000840825]{\includegraphics[scale=.45]{Rx_Logo}}
 
 \begin{document}
-    \begin{frame}
+    \begin{frame}[c]
         \titlepage
+    \end{frame}
+
+    \section{Introduzione}\label{sec:intro}
+        \subsection{Programmazione reattiva}\label{subsec:react}
+        \begin{frame}{\insertsectionhead}
+            \begin{block}{Pippo}
+                Pippo
+            \end{block}
+        \end{frame}
+
+        \subsection{Reactive Manifesto}\label{subsec:manifest}
+        \begin{frame}{\insertsectionhead}
+            \begin{block}{Pippo}
+                Pippo
+            \end{block}
+        \end{frame}
+
+        \subsection{Reactive Extensions}\label{subsec:rx}
+        \begin{frame}{\insertsectionhead}
+            \begin{block}{Pippo}
+                Pippo
+            \end{block}
+        \end{frame}
+
+    \section{RxJS: Reactive Extensions for JavaScript}\label{sec:rxjs}
+        \begin{frame}{\insertsectionhead}
+            \begin{block}{Pippo}
+                Pippo
+            \end{block}
+        \end{frame}
+    \nocite{*}
+    \begin{frame}[t,allowframebreaks]
+        \frametitle{References}
+        \printbibliography[heading=bibintoc]
     \end{frame}
 \end{document}
