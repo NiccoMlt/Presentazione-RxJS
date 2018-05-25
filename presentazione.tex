@@ -6,7 +6,7 @@
 % !TeX spellcheck = it-IT
 
 %! arara: clean: { files: [ arara.log, presentazione.aux, presentazione.log, presentazione.nav, presentazione.out, presentazione.snm, presentazione.toc, presentazione.xmpdata, pdfa.xmpi, presentazione.pdf ] }
-% arara: clean: { files: [ arara.log, presentazione.log, presentazione.pdf ] }
+% arara: clean: { files: [ arara.log, presentazione.log, presentazione.xmpdata, pdfa.xmpi, presentazione.pdf ] }
 % arara: pdflatex: { synctex: yes, action: batchmode, options: "-halt-on-error -file-line-error-style" }
 % arara: biber
 % arara: pdflatex: { synctex: yes, action: batchmode, options: "-halt-on-error -file-line-error-style" }
@@ -14,7 +14,6 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Genera un file report.xmpdata con i dati di titolo e autore per il formato PDF/A %%
-\IfFileExists{\jobname.xmpdata}{}{%
 \begin{filecontents*}{\jobname.xmpdata}
 \Title{RxJS: Reactive Extensions For JavaScript}
 \Author{Niccolò Maltoni}
@@ -22,7 +21,6 @@
 \CopyrightURL{http://creativecommons.org/licenses/by-nc-sa/3.0/it/}
 \Keywords{RxJS\sep ReactiveX\sep JavaScript\sep JS}
 \end{filecontents*}
-}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \documentclass{beamer}
 
@@ -85,7 +83,11 @@
 \usepackage[pdf15,a-1b]{pdfx}
 
 \usetheme{Boadilla}             % serve per scegliere il layout generale dei frame
+% \definecolor{darkrxpurple}{RGB}{87,43,139}
+% \definecolor{rxpurple}{RGB}{216,26,96}
+% \definecolor{lighrxpurple}{RGB}{236,12,144}
 \usecolortheme{beaver}          % Per il colore va comunque bene questo
+% \usecolortheme[named=rxpurple]{structure}
 \setbeamerfont{block title}{size=\normalsize}
 \setbeamerfont{block body}{size=\small}
 
@@ -124,15 +126,19 @@
     \section{Introduzione}\label{sec:intro}
         \subsection{Programmazione reattiva}\label{subsec:react}
         \begin{frame}{\insertsectionhead}
-            \begin{block}{Pippo}
-                Pippo
+            \begin{block}{\insertsubsectionhead}
+                \smallskip
+                \begin{quote}
+                    `` It is convenient to distinguish roughly between three kinds of computer programs. Transformational programs compute results from a given set of inputs; typical examples are compilers or numerical computation programs. Interactive programs interact at their own speed with users or with other programs; from a user point of view, a time-sharing system is interactive. Reactive programs also maintain a continuous interaction with their environment, but at a speed which is determined by the environment, not the program itself. Interactive programs work at their own pace and mostly deal with communication, while reactive programs only work in response to external demands and mostly deal with accurate interrupt handling. ''
+                \end{quote}
+                \rightline{Gérard Berry, 1989~\cite{berry:inria-00075494}}
             \end{block}
         \end{frame}
 
         \subsection{Reactive Manifesto}\label{subsec:manifest}
         \begin{frame}{\insertsectionhead}
             \begin{block}{Pippo}
-                Pippo
+                PippoPippoPippo
             \end{block}
         \end{frame}
 
