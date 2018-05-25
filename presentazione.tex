@@ -83,13 +83,31 @@
 \usepackage[pdf15,a-1b]{pdfx}
 
 \usetheme{Boadilla}             % serve per scegliere il layout generale dei frame
-% \definecolor{darkrxpurple}{RGB}{87,43,139}
-% \definecolor{rxpurple}{RGB}{216,26,96}
-% \definecolor{lighrxpurple}{RGB}{236,12,144}
+\definecolor{darkrxpurple}{RGB}{87,43,139}
+\definecolor{rxpurple}{RGB}{216,26,96}
+\colorlet{primarygrey}{gray!30!white}
+\colorlet{secondarygrey}{gray!15!white}
+\colorlet{terziarygrey}{gray!10!white}
+\colorlet{greyrxpurple}{rxpurple!75!secondarygrey}
+\definecolor{lighrxpurple}{RGB}{236,12,144}
+\colorlet{greylightrxpurple}{lighrxpurple!25!terziarygrey}
 \usecolortheme{beaver}          % Per il colore va comunque bene questo
 % \usecolortheme[named=rxpurple]{structure}
 \setbeamerfont{block title}{size=\normalsize}
 \setbeamerfont{block body}{size=\small}
+\setbeamertemplate{navigation symbols}{}  % nasconde i controlli di presentazione
+\setbeamercolor{palette primary}{fg=darkrxpurple, bg=greylightrxpurple}
+\setbeamercolor{palette secondary}{fg=white, bg=lighrxpurple}
+\setbeamercolor{palette tertiary}{fg=white, bg=darkrxpurple}
+% \setbeamercolor{title}{fg=white}
+% \setbeamercolor{subtitle}{fg=white}
+\setbeamercolor{title}{fg=white, bg=darkrxpurple}
+\setbeamercolor{subtitle}{fg=white, bg=darkrxpurple}
+\setbeamercolor{frametitle}{fg=rxpurple}
+\setbeamercolor{framesubtitle}{fg=rxpurple}
+\setbeamercolor{block title}{fg=darkrxpurple}
+
+\renewcommand{\thefootnote}{\arabic{footnote}}
 
 %% Permette di inserire l'outline prima di ogni sezione %%
 \AtBeginSection[]{%
@@ -114,9 +132,9 @@
 %% Titolo %%
 \title[RxJS]{ReactiveX RxJS}
 \subtitle{Reactive Extensions For JavaScript}
-\author[Niccolò~Maltoni]{\large{Niccolò~Maltoni}}
+\author[Niccolò~Maltoni]{\large{Niccolò~Maltoni}\\{\small\texttt{niccolo.maltoni@studio.unibo.it}}}
 \date[30 maggio 2018]{}
-\institute[0000840825]{\includegraphics[scale=.45]{Rx_Logo}}
+\institute[0000840825]{\includegraphics[scale=.4]{Rx_Logo}}
 
 \begin{document}
     \begin{frame}[c]
@@ -129,28 +147,35 @@
             \begin{block}{\insertsubsectionhead}
                 \smallskip
                 \begin{quote}
-                    `` It is convenient to distinguish roughly between three kinds of computer programs. Transformational programs compute results from a given set of inputs; typical examples are compilers or numerical computation programs. Interactive programs interact at their own speed with users or with other programs; from a user point of view, a time-sharing system is interactive. Reactive programs also maintain a continuous interaction with their environment, but at a speed which is determined by the environment, not the program itself. Interactive programs work at their own pace and mostly deal with communication, while reactive programs only work in response to external demands and mostly deal with accurate interrupt handling. ''
+                    `` It is convenient to distinguish roughly between three kinds of computer programs.
+                    Transformational programs compute results from a given set of inputs;
+                    typical examples are compilers or numerical computation programs.
+                    Interactive programs interact at their own speed with users or with other programs;
+                    from a user point of view, a time-sharing system is interactive.
+                    \textbf{Reactive programs also maintain a continuous interaction with their environment, but at a speed which is determined by the environment, not the program itself}.
+                    Interactive programs work at their own pace and mostly deal with communication, while reactive programs only work in response to external demands and mostly deal with accurate interrupt handling. ''
                 \end{quote}
-                \rightline{Gérard Berry, 1989~\cite{berry:inria-00075494}}
+                \rightline{Gérard~Berry,~1989~\cite{berry:inria-00075494}}
             \end{block}
         \end{frame}
 
         \subsection{Reactive Manifesto}\label{subsec:manifest}
         \begin{frame}{\insertsectionhead}
-            \begin{block}{Pippo}
-                PippoPippoPippo
+            \begin{block}{\insertsubsectionhead~\footnotemark}
+
             \end{block}
+            \footnotetext{https://www.reactivemanifesto.org/it}
         \end{frame}
 
         \subsection{Reactive Extensions}\label{subsec:rx}
-        \begin{frame}{\insertsectionhead}
+        \begin{frame}{\insertsectionhead}{\insertsubsectionhead}
             \begin{block}{Pippo}
                 Pippo
             \end{block}
         \end{frame}
 
     \section{RxJS: Reactive Extensions for JavaScript}\label{sec:rxjs}
-        \begin{frame}{\insertsectionhead}
+        \begin{frame}{\insertsectionhead}{\insertsubsectionhead}
             \begin{block}{Pippo}
                 Pippo
             \end{block}
