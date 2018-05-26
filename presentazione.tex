@@ -152,7 +152,7 @@
         \titlepage
     \end{frame}
 
-    \section{Background}\label{sec:intro}
+    \section{Introduzione}\label{sec:intro}
         \subsection{Programmazione reattiva}\label{subsec:react}
         \begin{frame}{\insertsectionhead}
             \begin{block}{\insertsubsectionhead}
@@ -308,8 +308,28 @@
         \subsection{Reactive Extensions}\label{subsec:rx}
         \begin{frame}{\insertsectionhead}
             \begin{block}{\insertsubsectionhead}
-                Pippo
+                \begin{itemize}
+                    \item
+                        Reactive Extensions (o \textbf{ReactiveX}) sono un set di librerie per la maggior parte dei linguaggi e dei framework moderni che permette l'implementazione di programmi in grado di operare su sequenze di dati e input in modo \textit{reattivo} e \textit{asincrono}, indipendentemente dalla natura della sorgente
+                    \item
+                        ispirate alle \engEmph{Microsoft's Reactive Extensions} per ambiente .NET
+                    \item
+                        combinazione di:
+                        \begin{itemize}
+                        {
+                            \footnotesize
+                            \item pattern Observer
+                            \item pattern Iterator
+                            \item programmazione funzionale
+                        }
+                        \end{itemize}
+                \end{itemize}
             \end{block}
+            \begin{figure}[htbp]
+                \centering
+                \includegraphics[scale=.35]{Rx_Logo_Text}
+                \label{fig:rx}
+            \end{figure}
         \end{frame}
 
     \section{RxJS: Reactive Extensions for JavaScript}\label{sec:rxjs}
