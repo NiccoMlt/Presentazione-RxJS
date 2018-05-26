@@ -7,13 +7,13 @@
 
 %! arara: clean: { files: [ arara.log, presentazione.aux, presentazione.log, presentazione.nav, presentazione.out, presentazione.snm, presentazione.toc, presentazione.xmpdata, pdfa.xmpi, presentazione.pdf ] }
 % arara: clean: { files: [ arara.log, presentazione.log, presentazione.xmpdata, pdfa.xmpi, presentazione.pdf ] }
-% arara: pdflatex: { synctex: yes, action: batchmode, options: "-halt-on-error -file-line-error-style" }
+% arara: pdflatex: { shell: yes, synctex: yes, action: batchmode, options: "-halt-on-error -file-line-error-style" }
 % arara: biber
-% arara: pdflatex: { synctex: yes, action: batchmode, options: "-halt-on-error -file-line-error-style" }
-% arara: pdflatex: { synctex: yes, action: nonstopmode, options: "-halt-on-error -file-line-error-style" }
+% arara: pdflatex: { shell: yes, synctex: yes, action: batchmode, options: "-halt-on-error -file-line-error-style" }
+% arara: pdflatex: { shell: yes, synctex: yes, action: nonstopmode, options: "-halt-on-error -file-line-error-style" }
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Genera un file report.xmpdata con i dati di titolo e autore per il formato PDF/A %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Genera un file report.xmpdata con i dati per PDF/A %%
 \begin{filecontents*}{\jobname.xmpdata}
 \Title{RxJS: Reactive Extensions For JavaScript}
 \Author{Niccolò Maltoni}
@@ -21,9 +21,12 @@
 \CopyrightURL{http://creativecommons.org/licenses/by-nc-sa/3.0/it/}
 \Keywords{RxJS\sep ReactiveX\sep JavaScript\sep JS}
 \end{filecontents*}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \documentclass{beamer}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Imposto la codifica del sorgente e del testo in uscita %%
 \usepackage[T1]{fontenc}        % serve per impostare la codifica di output del font
 \usepackage{textcomp}           % serve per fornire supporto ai Text Companion fonts
  \usepackage[utf8]{inputenc}     % serve per impostare la codifica di input del font
@@ -32,7 +35,7 @@
     italian             % utilizza l'italiano come lingua primaria
 ]{babel}                        % serve per scrivere Indice, Capitolo, etc in Italiano
 \usepackage{lmodern}            % carica una variante Latin Modern prodotto dal GUST
-%% ORDINE IMPORTANTE FINE %%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \usepackage{graphicx}           % serve per includere immagini e grafici
 
@@ -42,8 +45,6 @@
     english=american,   % imposta lo stile per l'inglese
     italian=guillemets  % imposta lo stile per l'italiano
 ]{csquotes}                     % serve a impostare lo stile delle virgolette
-
-%\usepackage{silence}
 
 \usepackage[%
     maxcitenames=2,     % massimo numero di nomi nelle citazioni
@@ -82,6 +83,8 @@
 }
 \usepackage[pdf15,a-1b]{pdfx}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Impostazione del tema %%
 \usetheme{Boadilla}             % serve per scegliere il layout generale dei frame
 \definecolor{darkrxpurple}{RGB}{87,43,139}
 \definecolor{rxpurple}{RGB}{216,26,96}
@@ -108,7 +111,14 @@
 \setbeamercolor{block title}{fg=darkrxpurple}
 
 \renewcommand{\thefootnote}{\arabic{footnote}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Definisco un nuovo comando per enfatizzare il testo in inglese %%
+\newcommand{\engEmph}[1] {\emph{\foreignlanguage{english}#1}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Permette di inserire l'outline prima di ogni sezione %%
 \AtBeginSection[]{%
     \begin{frame}<beamer>
@@ -116,7 +126,9 @@
         \tableofcontents[currentsection]
     \end{frame}
 }
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Permette di inserire automaticamente titolo e sottotitolo %%
 % \addtobeamertemplate{frametitle}{
 %    \let\insertframetitle\insertsectionhead}{}
@@ -129,7 +141,6 @@
 % \makeatother
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%% Titolo %%
 \title[RxJS]{ReactiveX RxJS}
 \subtitle{Reactive Extensions For JavaScript}
 \author[Niccolò~Maltoni]{\large{Niccolò~Maltoni}\\{\small\texttt{niccolo.maltoni@studio.unibo.it}}}
@@ -141,7 +152,7 @@
         \titlepage
     \end{frame}
 
-    \section{Introduzione}\label{sec:intro}
+    \section{Background}\label{sec:intro}
         \subsection{Programmazione reattiva}\label{subsec:react}
         \begin{frame}{\insertsectionhead}
             \begin{block}{\insertsubsectionhead}
@@ -161,15 +172,142 @@
 
         \subsection{Reactive Manifesto}\label{subsec:manifest}
         \begin{frame}{\insertsectionhead}
-            \begin{block}{\insertsubsectionhead~\footnotemark}
-
+            \begin{block}{\insertsubsectionhead~\cite{citeulike:13845446}}
+                \begin{itemize}
+                    \item
+                        Prima versione presentata nel 2013.
+                    \item
+                        Principi base:
+                        \begin{itemize}
+                            \item responsività;
+                            \item resilienza;
+                            \item scalabilità;
+                            \item \engEmph{event-driven}.
+                        \end{itemize}
+                    \item
+                        La versione attuale (2.0) è stata presentata l'anno successivo~\footnotemark.
+                        \begin{itemize}
+                            \item da scalabilità a \textbf{elasticità};
+                            \item da \engEmph{event-driven} a \textbf{\engEmph{message-driven}}.
+                        \end{itemize}
+                \end{itemize}
             \end{block}
-            \footnotetext{https://www.reactivemanifesto.org/it}
+            \footnotetext{\url{https://www.lightbend.com/blog/reactive-manifesto-20}}
+        \end{frame}
+
+        \begin{frame}[c]{\insertsectionhead}{\insertsubsectionhead}
+        % \begin{block}{\vspace*{-3ex}}
+            \begin{figure}[htbp]
+                \centering
+                \includegraphics[width=\linewidth]{reactive-traits-it}
+                \caption{Rappresentazione dei principi base del \engEmph{Reactive Manifesto}}
+                \label{fig:manifest}
+            \end{figure}
+        % \end{block}
+        \end{frame}
+
+        \begin{frame}[c]{\insertsectionhead}{\insertsubsectionhead}
+            \begin{columns}
+                \begin{column}{.47\textwidth}
+                    \centering
+                    \subsubsection{Responsività}\label{subsub:responsive}
+                    \begin{block}{\insertsubsubsectionhead}
+                    \begin{itemize}
+                        \item \textbf{tempestività} della risposta
+                        \begin{itemize}
+                            {
+                                \footnotesize
+                                \item rapida identificazione dei problemi
+                                \item minimizzazione del tempo di risposta
+                            }
+                        \end{itemize}
+                        \item garanzia di \textbf{qualità del servizio} nel tempo
+                        \item \textbf{predicibilità} del comportamento
+                        \begin{itemize}
+                            {
+                                \footnotesize
+                                \item semplificazione della gestione degli errori
+                                \item fiducia degli utenti finali nel sistema
+                            }
+                        \end{itemize}
+                    \end{itemize}
+                    \end{block}
+                \end{column}
+                \begin{column}{.47\textwidth}
+                    \centering
+                    \subsubsection{Resilienza}\label{subsub:resiliency}
+                    \begin{block}{\insertsubsubsectionhead}
+                        \begin{itemize}
+                            \item
+                                il sistema resta \textbf{responsivo anche in caso di guasti}
+                            \item
+                                garantita tramite:
+                                \begin{itemize}
+                                {
+                                    \footnotesize
+                                    \item replica
+                                    \item contenimento
+                                    \item isolamento
+                                    \item delega
+                                }
+                            \end{itemize}
+                        \end{itemize}
+                    \end{block}
+                \end{column}
+            \end{columns}
+        \end{frame}
+        \begin{frame}[c]{\insertsectionhead}{\insertsubsectionhead}
+            \begin{columns}
+                \begin{column}{.47\textwidth}
+                    \centering
+                    \subsubsection{Elasticità}\label{subsub:elasticity}
+                    \begin{block}{\insertsubsubsectionhead}
+                    \begin{itemize}
+                        \item
+                            il sistema rimane \textbf{responsivo sotto carichi di lavoro variabili} nel tempo
+                        \item
+                            \textbf{adattabilità} attraverso incremento o decremento delle risorse allocate al processamento degli input
+                            \begin{itemize}
+                            {
+                                \footnotesize
+                                \item no sezioni contese né colli di bottiglia
+                                \item distribuibilità
+                                \item replica dei componenti
+                                \item ripartizione degli input
+                            }
+                            \end{itemize}
+                        \item possibile implementazione predittiva
+                    \end{itemize}
+                    \end{block}
+                \end{column}
+                \begin{column}{.47\textwidth}
+                    \centering
+                    \subsubsection{\engEmph{Message-Driven}}\label{subsub:meddagedriven}
+                    \begin{block}{\insertsubsubsectionhead}
+                        \begin{itemize}
+                            \item
+                                \textbf{scambio di messaggi asincrono}
+                                \begin{itemize}
+                                {
+                                    \footnotesize
+                                    \item stile di comunicazione non bloccante
+                                }
+                                \end{itemize}
+                            \item
+                                basso accoppiamento tra i componenti
+                            \item
+                                isolamento e trasparenza sul dislocamento
+                            \item
+                                esprimere i guasti del componente sotto forma di messaggi
+                        \end{itemize}
+                    \end{block}
+                \end{column}
+            \end{columns}
         \end{frame}
 
         \subsection{Reactive Extensions}\label{subsec:rx}
-        \begin{frame}{\insertsectionhead}{\insertsubsectionhead}
-            \begin{block}{Pippo}
+        \begin{frame}{\insertsectionhead}
+            \begin{block}{\insertsubsectionhead}
                 Pippo
             \end{block}
         \end{frame}
@@ -181,8 +319,9 @@
             \end{block}
         \end{frame}
     \nocite{*}
+    \section{\refname}\label{sec:ref}
     \begin{frame}[t,allowframebreaks]
-        \frametitle{References}
-        \printbibliography[heading=bibintoc]
+        \frametitle{\insertsectionhead}
+        \printbibliography
     \end{frame}
 \end{document}
