@@ -41,6 +41,9 @@
 
 \usepackage{listings}
 \usepackage{minted}
+\usemintedstyle{native}
+\definecolor{monokaibg}{RGB}{46,46,46}
+\setminted[js]{fontsize=\scriptsize,linenos=true,bgcolor=monokaibg}
 
 \usepackage[%
     strict,             % rende tutti gli warning degli errori
@@ -60,9 +63,6 @@
 ]{biblatex}                     % si interfaccia con bibtex e biber per la bibliografia
 \addbibresource{biblio.bib}
 
-\setcounter{secnumdepth}{2}     % Numera fino alla sottosezione nel corpo del testo
-\setcounter{tocdepth}{3}        % Numera fino alla sotto-sottosezione nell'indice
-
 \graphicspath{{img/}}
 
 \usepackage[%
@@ -70,7 +70,6 @@
     open=false,         % equivale a bookmarksopen di hyperref
     numbered=true       % equivale a bookmarksnumbered di hyperref
 ]{bookmark}                     % Gestisce i segnalibri meglio di hyperref
-\usepackage{hyperref}           % Gestisce tutte le cose ipertestuali del pdf
 \hypersetup{%
     pdfpagemode={UseNone},
     hidelinks,          % nasconde i collegamenti (non vengono quadrettati)
@@ -84,6 +83,7 @@
     pdfmenubar=false,   % show Acrobat's menu?
     plainpages=false
 }
+\usepackage{nameref}
 \usepackage[pdf15,a-1b]{pdfx}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -126,7 +126,7 @@
 \AtBeginSection[]{%
     \begin{frame}<beamer>
         \frametitle{Outline}
-        \tableofcontents[currentsection]
+        \tableofcontents[currentsection,subsubsectionstyle=hide]
     \end{frame}
 }
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -156,7 +156,9 @@
     \end{frame}
 
     \section{Introduzione}\label{sec:intro}
+
         \subsection{Programmazione reattiva}\label{subsec:react}
+
         \begin{frame}{\insertsectionhead}
             \begin{block}{\insertsubsectionhead}
                 \smallskip
@@ -175,6 +177,7 @@
         \end{frame}
 
         \subsection{Reactive Manifesto}\label{subsec:manifest}
+
         \begin{frame}{\insertsectionhead}
             \begin{block}{\insertsubsectionhead~\cite{citeulike:13845446}}
                 \begin{itemize}
@@ -200,14 +203,12 @@
         \end{frame}
 
         \begin{frame}[c]{\insertsectionhead}{\insertsubsectionhead}
-        % \begin{block}{\vspace*{-3ex}}
             \begin{figure}[htbp]
                 \centering
                 \includegraphics[width=\linewidth]{reactive-traits-it}
                 \caption{Rappresentazione dei principi base del \engEmph{Reactive Manifesto}}
                 \label{fig:manifest}
             \end{figure}
-        % \end{block}
         \end{frame}
 
         \begin{frame}[c]{\insertsectionhead}{\insertsubsectionhead}
@@ -216,25 +217,28 @@
                     \centering
                     \subsubsection{Responsività}\label{subsub:responsive}
                     \begin{block}{\insertsubsubsectionhead}
-                    \begin{itemize}
-                        \item \textbf{tempestività} della risposta
                         \begin{itemize}
-                            {
-                                \footnotesize
-                                \item rapida identificazione dei problemi
-                                \item minimizzazione del tempo di risposta
-                            }
+                            \item
+                                \textbf{tempestività} della risposta
+                                \begin{itemize}
+                                {
+                                    \footnotesize
+                                    \item rapida identificazione dei problemi
+                                    \item minimizzazione del tempo di risposta
+                                }
+                                \end{itemize}
+                            \item
+                                garanzia di \textbf{qualità del servizio} nel tempo
+                            \item
+                                \textbf{predicibilità} del comportamento
+                                \begin{itemize}
+                                {
+                                    \footnotesize
+                                    \item semplificazione della gestione degli errori
+                                    \item fiducia degli utenti finali nel sistema
+                                }
+                                \end{itemize}
                         \end{itemize}
-                        \item garanzia di \textbf{qualità del servizio} nel tempo
-                        \item \textbf{predicibilità} del comportamento
-                        \begin{itemize}
-                            {
-                                \footnotesize
-                                \item semplificazione della gestione degli errori
-                                \item fiducia degli utenti finali nel sistema
-                            }
-                        \end{itemize}
-                    \end{itemize}
                     \end{block}
                 \end{column}
                 \begin{column}{.47\textwidth}
@@ -260,28 +264,29 @@
                 \end{column}
             \end{columns}
         \end{frame}
+
         \begin{frame}[c]{\insertsectionhead}{\insertsubsectionhead}
             \begin{columns}
                 \begin{column}{.47\textwidth}
                     \centering
                     \subsubsection{Elasticità}\label{subsub:elasticity}
                     \begin{block}{\insertsubsubsectionhead}
-                    \begin{itemize}
-                        \item
-                            il sistema rimane \textbf{responsivo sotto carichi di lavoro variabili} nel tempo
-                        \item
-                            \textbf{adattabilità} attraverso incremento o decremento delle risorse allocate al processamento degli input
-                            \begin{itemize}
-                            {
-                                \footnotesize
-                                \item no sezioni contese né colli di bottiglia
-                                \item distribuibilità
-                                \item replica dei componenti
-                                \item ripartizione degli input
-                            }
-                            \end{itemize}
-                        \item possibile implementazione predittiva
-                    \end{itemize}
+                        \begin{itemize}
+                            \item
+                                il sistema rimane \textbf{responsivo sotto carichi di lavoro variabili} nel tempo
+                            \item
+                                \textbf{adattabilità} attraverso incremento o decremento delle risorse allocate al processamento degli input
+                                \begin{itemize}
+                                {
+                                    \footnotesize
+                                    \item no sezioni contese né colli di bottiglia
+                                    \item distribuibilità
+                                    \item replica dei componenti
+                                    \item ripartizione degli input
+                                }
+                                \end{itemize}
+                            \item possibile implementazione predittiva
+                        \end{itemize}
                     \end{block}
                 \end{column}
                 \begin{column}{.47\textwidth}
@@ -310,6 +315,7 @@
         \end{frame}
 
         \subsection{Reactive Extensions}\label{subsec:rx}
+
         \begin{frame}{\insertsectionhead}
             \begin{block}{\insertsubsectionhead}
                 \begin{itemize}
@@ -337,9 +343,10 @@
         \end{frame}
 
     \section{RxJS: Reactive Extensions Library for JavaScript}\label{sec:rxjs}
-        \subsection{Reactive Extensions for JavaScript}\label{subsec:rxjs}
-        \begin{frame}[fragile]{\insertsectionhead}
 
+        \subsection{Reactive Extensions per JavaScript (e TypeScript)}\label{subsec:rxjs}
+
+        \begin{frame}[fragile]{\insertsectionhead}
             \begin{block}{\insertsubsectionhead\footnotemark}
                 \begin{itemize}
                     \item
@@ -354,32 +361,141 @@
                         \end{itemize}
                 \end{itemize}
             \end{block}
-
-            \subsubsection{Installazione}\label{subsec:install}
-            \begin{block}{\insertsubsubsectionhead}
-                \begin{itemize}
-                    {
-                        \footnotesize
-                        \item
-                            Via \textbf{\small\url{npm}}:
-                            \inputminted[fontsize=\scriptsize]{text}{res/npm_install.sh}
-                        \item
-                            Via \textbf{\footnotesize CDN}:
-                            \inputminted[fontsize=\scriptsize]{text}{res/cdn_install.html}
-                    }
-                \end{itemize}
-            \end{block}
-
             \footnotetext{\url{http://reactivex.io/rxjs}}
         \end{frame}
-        
+
+        % \begin{frame}{\insertsectionhead}
+        %     \subsubsection{Caratteristiche}\label{subsub:characteristics}
+        %     \begin{block}{\insertsubsubsectionhead}
+        %         \begin{itemize}
+        %             \item
+        %                 \engEmph{Purity} (purezza): è in grado di generare valori utilizzando funzioni pure
+        %                 \begin{itemize}
+        %                     \item codice meno propenso ad errori
+        %                 \end{itemize}
+        %             \item
+        %                 \engEmph{Flow} (flusso): gli \texttt{Observable} permettono un controllo su un flusso di eventi e/o valori
+        %             \item
+        %                 \engEmph{Values} (valori): gli osservabili permettono di manipolare valori all'interno del flusso.
+        %         \end{itemize}
+        %     \end{block}
+        % \end{frame}
+
+        \begin{frame}[fragile]{\insertsectionhead}
+        \subsubsection{Installazione}\label{subsec:install}
+        \begin{block}{\insertsubsubsectionhead}
+            \begin{itemize}
+                \item
+                    Via \textbf{\url{npm}}:
+                    \inputminted[fontsize=\scriptsize]{text}{res/npm_install.sh}
+                \item
+                    Via \textbf{\footnotesize CDN}:
+                    \inputminted[fontsize=\scriptsize]{text}{res/cdn_install.html}
+            \end{itemize}
+        \end{block}
+        \end{frame}
+
         \subsection{Costrutti fondamentali}\label{subsec:costrutti}
-            \subsubsection{Observable}\label{subsec:observable}
+
+            \subsubsection{Observable}\label{subsub:observable}
+
             \begin{frame}{\insertsubsectionhead}
                 \begin{block}{\texttt{\insertsubsubsectionhead}}
-                    Pippo
+                    \begin{itemize}
+                        \item costituisce il costrutto base della libreria
+                        \item è uno \engEmph{stream}, costruito in modo asincrono col procedere del tempo
+                        \item è in grado di generare valori utilizzando funzioni pure
+                        \item offre operatori per il controllo di flusso
+                    \end{itemize}
                 \end{block}
             \end{frame}
+
+            \begin{frame}{\insertsubsectionhead}{\insertsubsubsectionhead}
+                \begin{block}{\engEmph{Hot} e \engEmph{Cold}}
+                    \begin{itemize}
+                        \item
+                            Uno \engEmph{stream} si definisce \textbf{\engEmph{cold}} se l'\texttt{Observable} genera il produttore dei valori nel flusso; per esempio:
+
+                            \inputminted{js}{res/cold_observable.js}
+
+                        \item
+                            Uno \engEmph{stream} si definisce \textbf{\engEmph{hot}} se l'\texttt{Observable} racchiude il produttore dei valori nel flusso; per esempio:
+
+                            \inputminted{js}{res/hot_observable.js}
+                    \end{itemize}
+                \end{block}
+            \end{frame}
+
+            \subsubsection{.pipe()}\label{subsub:pipe}
+
+            \begin{frame}{\insertsubsectionhead}{\nameref{subsub:observable}}
+                \begin{block}{\texttt{\insertsubsubsectionhead}}
+                    \begin{itemize}
+                        \item Pippo
+                    \end{itemize}
+                \end{block}
+            \end{frame}
+
+            \subsubsection{.map()}\label{subsub:map}
+
+            \begin{frame}{\insertsubsectionhead}{\nameref{subsub:observable}}
+                \begin{block}{\texttt{\insertsubsubsectionhead}}
+                    \begin{itemize}
+                        \item Pippo
+                    \end{itemize}
+                \end{block}
+            \end{frame}
+
+            \subsubsection{.reduce()}\label{subsub:reduce}
+
+            \begin{frame}{\insertsubsectionhead}{\nameref{subsub:observable}}
+                \begin{block}{\texttt{\insertsubsubsectionhead}}
+                    \begin{itemize}
+                        \item Pippo
+                    \end{itemize}
+                \end{block}
+            \end{frame}
+
+            \subsubsection{.tap()}\label{subsub:tap}
+
+            \begin{frame}{\insertsubsectionhead}{\nameref{subsub:observable}}
+                \begin{block}{\texttt{\insertsubsubsectionhead} (precedentemente \texttt{.do()})}
+                    \begin{itemize}
+                        \item Pippo
+                    \end{itemize}
+                \end{block}
+            \end{frame}
+
+            \subsubsection{.debounce() \& .throttle()}\label{subsub:debounce}
+
+            \begin{frame}{\insertsubsectionhead}{\nameref{subsub:observable}}
+                \begin{block}{\texttt{\insertsubsubsectionhead}}
+                    \begin{itemize}
+                        \item Pippo
+                    \end{itemize}
+                \end{block}
+            \end{frame}
+
+            \subsubsection{.catchError()}\label{subsub:catch}
+
+            \begin{frame}{\insertsubsectionhead}{\nameref{subsub:observable}}
+                \begin{block}{\texttt{\insertsubsubsectionhead} (precedentemente \texttt{.catch()})}
+                    \begin{itemize}
+                        \item Pippo
+                    \end{itemize}
+                \end{block}
+            \end{frame}
+
+            \subsubsection{Subject}\label{subsub:subject}
+
+            \begin{frame}{\insertsubsectionhead}
+                \begin{block}{\texttt{\insertsubsubsectionhead}}
+                    \begin{itemize}
+                        \item Topolino
+                    \end{itemize}
+                \end{block}
+            \end{frame}
+
     \nocite{*}
     \section{\refname}\label{sec:ref}
     \begin{frame}[t,allowframebreaks]
