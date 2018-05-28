@@ -39,6 +39,9 @@
 
 \usepackage{graphicx}           % serve per includere immagini e grafici
 
+\usepackage{listings}
+\usepackage{minted}
+
 \usepackage[%
     strict,             % rende tutti gli warning degli errori
     autostyle,          % imposta lo stile in base al linguaggio specificato in babel
@@ -158,6 +161,7 @@
             \begin{block}{\insertsubsectionhead}
                 \smallskip
                 \begin{quote}
+                    \foreignlanguage{english}
                     `` It is convenient to distinguish roughly between three kinds of computer programs.
                     Transformational programs compute results from a given set of inputs;
                     typical examples are compilers or numerical computation programs.
@@ -332,12 +336,50 @@
             \end{figure}
         \end{frame}
 
-    \section{RxJS: Reactive Extensions for JavaScript}\label{sec:rxjs}
-        \begin{frame}{\insertsectionhead}{\insertsubsectionhead}
-            \begin{block}{Pippo}
-                Pippo
+    \section{RxJS: Reactive Extensions Library for JavaScript}\label{sec:rxjs}
+        \subsection{Reactive Extensions for JavaScript}\label{subsec:rxjs}
+        \begin{frame}[fragile]{\insertsectionhead}
+
+            \begin{block}{\insertsubsectionhead\footnotemark}
+                \begin{itemize}
+                    \item
+                        RxJS è una libreria per la programmazione reattiva pensata per JavaScript.
+                    \item
+                        semplifica l'implementazione di \engEmph{callback} e chiamate asincrone attraverso il tipo \texttt{Observable} e i suoi costrutti satelliti, come:
+                        \begin{itemize}
+                            \item \texttt{Observer}
+                            \item \texttt{Schedulers}
+                            \item \texttt{Subjects}
+                            \item operatori come \texttt{map}, \texttt{filter}, \texttt{reduce}, \texttt{every}, ecc ...
+                        \end{itemize}
+                \end{itemize}
             \end{block}
+
+            \subsubsection{Installazione}\label{subsec:install}
+            \begin{block}{\insertsubsubsectionhead}
+                \begin{itemize}
+                    {
+                        \footnotesize
+                        \item
+                            Via \textbf{\small\url{npm}}:
+                            \inputminted[fontsize=\scriptsize]{text}{res/npm_install.sh}
+                        \item
+                            Via \textbf{\footnotesize CDN}:
+                            \inputminted[fontsize=\scriptsize]{text}{res/cdn_install.html}
+                    }
+                \end{itemize}
+            \end{block}
+
+            \footnotetext{\url{http://reactivex.io/rxjs}}
         \end{frame}
+        
+        \subsection{Costrutti fondamentali}\label{subsec:costrutti}
+            \subsubsection{Observable}\label{subsec:observable}
+            \begin{frame}{\insertsubsectionhead}
+                \begin{block}{\texttt{\insertsubsubsectionhead}}
+                    Pippo
+                \end{block}
+            \end{frame}
     \nocite{*}
     \section{\refname}\label{sec:ref}
     \begin{frame}[t,allowframebreaks]
