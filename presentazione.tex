@@ -42,7 +42,6 @@
 \usepackage{graphicx}           % serve per includere immagini e grafici
 
 \usepackage{tikz}
-% \usepackage{listings}
 \usepackage{minted}
 \usemintedstyle{native}
 \definecolor{monokaibg}{RGB}{46,46,46}
@@ -137,19 +136,6 @@
     \end{frame}
 }
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%% Permette di inserire automaticamente titolo e sottotitolo %%
-% \addtobeamertemplate{frametitle}{
-%    \let\insertframetitle\insertsectionhead}{}
-% \addtobeamertemplate{frametitle}{
-%    \let\insertframesubtitle\insertsubsectionhead}{}
-
-% \makeatletter
-%   \CheckCommand*\beamer@checkframetitle{\@ifnextchar\bgroup\beamer@inlineframetitle{}}
-%   \renewcommand*\beamer@checkframetitle{\global\let\beamer@frametitle\relax\@ifnextchar\bgroup\beamer@inlineframetitle{}}
-% \makeatother
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \title[RxJS]{ReactiveX RxJS}
 \subtitle{Reactive Extensions For JavaScript}
@@ -248,6 +234,7 @@
                         \end{itemize}
                     \end{block}
                 \end{column}
+                \pause
                 \begin{column}{.47\textwidth}
                     \centering
                     \subsubsection{Resilienza}\label{subsub:resiliency}
@@ -296,6 +283,7 @@
                         \end{itemize}
                     \end{block}
                 \end{column}
+                \pause
                 \begin{column}{.47\textwidth}
                     \centering
                     \subsubsection{\engEmph{Message-Driven}}\label{subsub:meddagedriven}
@@ -371,23 +359,6 @@
             \footnotetext{\url{http://reactivex.io/rxjs}}
         \end{frame}
 
-        % \begin{frame}{\insertsectionhead}
-        %     \subsubsection{Caratteristiche}\label{subsub:characteristics}
-        %     \begin{block}{\insertsubsubsectionhead}
-        %         \begin{itemize}
-        %             \item
-        %                 \engEmph{Purity} (purezza): è in grado di generare valori utilizzando funzioni pure
-        %                 \begin{itemize}
-        %                     \item codice meno propenso ad errori
-        %                 \end{itemize}
-        %             \item
-        %                 \engEmph{Flow} (flusso): gli \texttt{Observable} permettono un controllo su un flusso di eventi e/o valori
-        %             \item
-        %                 \engEmph{Values} (valori): gli osservabili permettono di manipolare valori all'interno del flusso.
-        %         \end{itemize}
-        %     \end{block}
-        % \end{frame}
-
         \begin{frame}[fragile]{\insertsectionhead}
         \subsubsection{Installazione}\label{subsec:install}
         \begin{block}{\insertsubsubsectionhead}
@@ -461,6 +432,7 @@
                 \end{block}
                 \inputminted{js}{src/hot_observable.js}
                 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
             \end{frame}
 
             \subsubsection{.pipe()}\label{subsub:pipe}
