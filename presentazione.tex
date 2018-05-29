@@ -42,11 +42,15 @@
 \usepackage{graphicx}           % serve per includere immagini e grafici
 
 \usepackage{tikz}
-\usepackage{listings}
+% \usepackage{listings}
 \usepackage{minted}
 \usemintedstyle{native}
 \definecolor{monokaibg}{RGB}{46,46,46}
-\setminted[js]{fontsize=\scriptsize,linenos=true,bgcolor=monokaibg}
+\setminted[js]{                 % imposta il tema del codice JavaScript
+    fontsize=\scriptsize,       % imposta la dimensione del font
+    % linenos=true,               % imposta i numeri di linea
+    bgcolor=monokaibg           % imposta il background del colore definito precedentemente
+}
 
 \usepackage[%
     strict,             % rende tutti gli warning degli errori
@@ -405,28 +409,58 @@
             \begin{frame}{\insertsubsectionhead}
                 \begin{block}{\texttt{\insertsubsubsectionhead}}
                     \begin{itemize}
-                        \item costituisce il costrutto base della libreria
-                        \item è uno \engEmph{stream}, costruito in modo asincrono col procedere del tempo
-                        \item è in grado di generare valori utilizzando funzioni pure
-                        \item offre operatori per il controllo di flusso
+                        \item
+                            costituisce il costrutto base della libreria
+                        \item
+                            è uno \engEmph{stream}, costruito in modo asincrono col procedere del tempo
+                        \item
+                            è in grado di generare valori utilizzando funzioni pure
+                        \item
+                            offre operatori per il controllo di flusso
+                        \item
+                            può essere costruito:
+                            \begin{itemize}
+                                \item a partire da eventi (ad esempio del DOM), con \texttt{fromEvent()}
+                                \item a partire da \texttt{promise}
+                                \item da zero, con \texttt{timer}
+                                \item da zero, con \texttt{interval}
+                                \item da qualsiasi cosa, con \texttt{of}
+                            \end{itemize}
                     \end{itemize}
                 \end{block}
             \end{frame}
 
-            \begin{frame}{\insertsubsectionhead}{\insertsubsubsectionhead}
-                \begin{block}{Hot VS Cold}
-                    \begin{itemize}
-                        \item
-                            Uno \engEmph{stream} si definisce \textbf{\engEmph{cold}} se l'\texttt{Observable} genera il produttore dei valori nel flusso; per esempio:
+            \begin{frame}{\insertsubsectionhead}{\insertsubsubsectionhead: Hot VS Cold}
 
-                            \inputminted{js}{src/cold_observable.js}
+                %% Hot & Cold in un unico block %%
+                % \begin{block}{Hot VS Cold}
+                %     \begin{itemize}
+                %         \item
+                %             Uno \engEmph{stream} si definisce \textbf{\engEmph{cold}} se l'\texttt{Observable} genera il produttore dei valori nel flusso; per esempio:
+                %
+                %             \inputminted{js}{src/cold_observable.js}
+                %
+                %         \item
+                %             Uno \engEmph{stream} si definisce \textbf{\engEmph{hot}} se l'\texttt{Observable} racchiude il produttore dei valori nel flusso; per esempio:
+                %
+                %             \inputminted{js}{src/hot_observable.js}
+                %     \end{itemize}
+                % \end{block}
+                %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-                        \item
-                            Uno \engEmph{stream} si definisce \textbf{\engEmph{hot}} se l'\texttt{Observable} racchiude il produttore dei valori nel flusso; per esempio:
-
-                            \inputminted{js}{src/hot_observable.js}
-                    \end{itemize}
+                %% Hot & Cold in due block %%
+                \begin{block}{Cold}
+                    Uno \engEmph{stream} si definisce \textbf{\engEmph{cold}} se l'\texttt{Observable} genera il produttore dei valori nel flusso
                 \end{block}
+                \inputminted{js}{src/cold_observable.js}
+
+                \pause
+
+                \begin{block}{Hot}
+                    Uno \engEmph{stream} si definisce \textbf{\engEmph{hot}} se l'\texttt{Observable} racchiude il produttore dei valori nel flusso
+                \end{block}
+                \inputminted{js}{src/hot_observable.js}
+                %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
             \end{frame}
 
             \subsubsection{.pipe()}\label{subsub:pipe}
@@ -440,15 +474,10 @@
                             da RxJS 6, essi sono gli operatori standard, trovabili in \texttt{rxjs/operators}
                         \item
                             l'operatore \texttt{.pipe()} prende un infinito numero di argomenti, che sono funzioni applicabili allo stream; ad esempio:
-
-                            \inputminted{js}{src/pipe.js}
-                            % \begin{figure}
-                            %
-                            %     \caption{Lo stream emette numeri incrementali ogni 350ms e completa dopo il 25° valore; essi sono mappati con una funzione gaussiana e convertiti in una serie di caratteri ``•''}
-                            % \end{figure}
-
+                            % \inputminted{js}{src/pipe.js}
                     \end{itemize}
                 \end{block}
+                \inputminted{js}{src/pipe.js}
                 \only<2 | handout 0> {
                     \begin{tikzpicture}[remember picture,overlay]
                         \node[at=(current page.center)] {
@@ -481,7 +510,7 @@
 
             \subsubsection{.reduce() \& .scan()}\label{subsub:reduce}
 
-            \begin{frame}{\insertsubsectionhead}{\nameref{subsub:observable}}
+            \begin{frame}{\insertsubsectionhead}{\nameref{subsub:observable}: Pipable operators}
                 \begin{block}{\texttt{.reduce()}}
                     \begin{itemize}
                         \item
@@ -514,7 +543,7 @@
 
             \subsubsection{.tap()}\label{subsub:tap}
 
-            \begin{frame}{\insertsubsectionhead}{\nameref{subsub:observable}}
+            \begin{frame}{\insertsubsectionhead}{\nameref{subsub:observable}: Pipable operators}
                 \begin{block}{\texttt{\insertsubsubsectionhead} (precedentemente \texttt{.do()})}
                     \begin{itemize}
                         \item
@@ -534,7 +563,7 @@
 
             \subsubsection{.debounce() \& .debounceTime()}\label{subsub:debounce}
 
-            \begin{frame}{\insertsubsectionhead}{\nameref{subsub:observable}}
+            \begin{frame}{\insertsubsectionhead}{\nameref{subsub:observable}: Pipable operators}
                 \begin{block}{\texttt{\insertsubsubsectionhead}}
                     \begin{itemize}
                         \item
@@ -556,7 +585,7 @@
 
             \subsubsection{.throttle() \& .throttleTime()}\label{subsub:throttle}
 
-            \begin{frame}{\insertsubsectionhead}{\nameref{subsub:observable}}
+            \begin{frame}{\insertsubsectionhead}{\nameref{subsub:observable}: Pipable operators}
                 \begin{block}{\texttt{\insertsubsubsectionhead}}
                     \begin{itemize}
                         \item
@@ -578,28 +607,70 @@
 
             \subsubsection{.catchError()}\label{subsub:catch}
 
-            \begin{frame}{\insertsubsectionhead}{\nameref{subsub:observable}}
+            \begin{frame}{\insertsubsectionhead}{\nameref{subsub:observable}: Pipable operators}
                 \begin{block}{\texttt{\insertsubsubsectionhead} (precedentemente \texttt{.catch()})}
                     \begin{itemize}
-                        \item Pippo
+                        \item
+                            la versione ``\engEmph{pipable}'' è stata rinominata da \texttt{.catch()} a \texttt{.catchError()} per conflitto di nomi con funzioni standard di JavaScript
+                        \item
+                            permette di catturare gli errori nel flusso dell'\texttt{Observable} e gestirli attraverso un \engEmph{handler}; fatto ciò, può:
+                            \begin{itemize}
+                                \item ritornare un nuovo \texttt{Observable} con l'errore gestito
+                                \item lanciare un errore
+                            \end{itemize}
                     \end{itemize}
                 \end{block}
             \end{frame}
+
+            %% Tutto in una slide %%
+            % \begin{frame}[c, fragile]{\insertsubsectionhead}{\nameref{subsub:observable}: Pipable operators: \texttt{\insertsubsubsectionhead}}
+            %     \inputminted{js}{src/catch.js}
+            %     \begin{figure}
+            %         \centering
+            %         \includegraphics[height=.37\textwidth]{catch}
+            %     \end{figure}
+            %     % \includegraphics[width=\linewidth]{catch}
+            % \end{frame}
+            %%%%%%%%%%%%%%%%%%%%%%%%
+
+            %% Codice e grafica in due slide %%
+            \begin{frame}[c, fragile]{\insertsubsectionhead}{\nameref{subsub:observable}: Pipable operators: \texttt{\insertsubsubsectionhead}}
+                \inputminted{js}{src/catch.js}
+            \end{frame}
+
+            \begin{frame}[c, fragile]{\insertsubsectionhead}{\nameref{subsub:observable}: Pipable operators: \texttt{\insertsubsubsectionhead}}
+                \includegraphics[width=\linewidth]{catch}
+            \end{frame}
+            %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
             \subsubsection{Subject}\label{subsub:subject}
 
             \begin{frame}{\insertsubsectionhead}
                 \begin{block}{\texttt{\insertsubsubsectionhead}}
                     \begin{itemize}
-                        \item Topolino
+                        \item Un \texttt{Subject} è sia un \texttt{Observable} che un \texttt{Observer}:
+                              \begin{itemize}
+                                  \item
+                                      è possibile sottoscrivere tutti gli \texttt{Observer} che servono a un \texttt{Subject}, dopodiché sottoscrivere il \texttt{Subject} a una sorgente di \engEmph{backend}
+                                  \item
+                                      è possibile implementare un \texttt{Observable} con \engEmph{caching}, \engEmph{buffering} e/o \engEmph{time-shifting}
+                                  \item
+                                      è possibile utilizzare un \texttt{Subject} per fare \engEmph{broadcast} di eventi a più \texttt{Subscriber}
+                                  \item
+                                      è possibile aggiungere valori ad un \texttt{Subject} che racchiude un \texttt{Observable}, tramite l'operatore \texttt{.next()}
+                              \end{itemize}
                     \end{itemize}
                 \end{block}
             \end{frame}
 
+    % \section{Conclusioni}\label{sec:conclusioni}
+    % \begin{frame}{\insertsubsectionhead}
+    %     % Sono davvero necessarie delle conclusioni?
+    % \end{frame}
+
     \nocite{*}
     \section{\refname}\label{sec:ref}
-    \begin{frame}[t,allowframebreaks]
-        \frametitle{\insertsectionhead}
+    \begin{frame}[c,allowframebreaks]{\insertsectionhead}
         \printbibliography
     \end{frame}
 \end{document}
