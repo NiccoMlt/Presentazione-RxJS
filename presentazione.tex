@@ -23,7 +23,9 @@
 \end{filecontents*}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\documentclass{beamer}
+\documentclass[%
+    % handout             % configura la presentazione per la stampa
+]{beamer}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Imposto la codifica del sorgente e del testo in uscita %%
@@ -39,6 +41,7 @@
 
 \usepackage{graphicx}           % serve per includere immagini e grafici
 
+\usepackage{tikz}
 \usepackage{listings}
 \usepackage{minted}
 \usemintedstyle{native}
@@ -182,20 +185,20 @@
             \begin{block}{\insertsubsectionhead~\cite{citeulike:13845446}}
                 \begin{itemize}
                     \item
-                        Prima versione presentata nel 2013.
+                        Prima versione presentata nel 2013
                     \item
                         Principi base:
                         \begin{itemize}
-                            \item responsività;
-                            \item resilienza;
-                            \item scalabilità;
-                            \item \engEmph{event-driven}.
+                            \item \textbf{responsività}
+                            \item \textbf{resilienza}
+                            \item scalabilità
+                            \item \engEmph{event-driven}
                         \end{itemize}
                     \item
-                        La versione attuale (2.0) è stata presentata l'anno successivo~\footnotemark.
+                        La versione attuale (2.0) è stata presentata l'anno successivo\footnotemark
                         \begin{itemize}
-                            \item da scalabilità a \textbf{elasticità};
-                            \item da \engEmph{event-driven} a \textbf{\engEmph{message-driven}}.
+                            \item da scalabilità a \textbf{elasticità}
+                            \item da \engEmph{event-driven} a \textbf{\engEmph{message-driven}}
                         \end{itemize}
                 \end{itemize}
             \end{block}
@@ -350,7 +353,7 @@
             \begin{block}{\insertsubsectionhead\footnotemark}
                 \begin{itemize}
                     \item
-                        RxJS è una libreria per la programmazione reattiva pensata per JavaScript.
+                        RxJS è una libreria per la programmazione reattiva pensata per JavaScript
                     \item
                         semplifica l'implementazione di \engEmph{callback} e chiamate asincrone attraverso il tipo \texttt{Observable} e i suoi costrutti satelliti, come:
                         \begin{itemize}
@@ -387,10 +390,10 @@
             \begin{itemize}
                 \item
                     Via \textbf{\url{npm}}:
-                    \inputminted[fontsize=\scriptsize]{text}{res/npm_install.sh}
+                    \inputminted[fontsize=\scriptsize]{text}{src/npm_install.sh}
                 \item
                     Via \textbf{\footnotesize CDN}:
-                    \inputminted[fontsize=\scriptsize]{text}{res/cdn_install.html}
+                    \inputminted[fontsize=\scriptsize]{text}{src/cdn_install.html}
             \end{itemize}
         \end{block}
         \end{frame}
@@ -411,17 +414,17 @@
             \end{frame}
 
             \begin{frame}{\insertsubsectionhead}{\insertsubsubsectionhead}
-                \begin{block}{\engEmph{Hot} e \engEmph{Cold}}
+                \begin{block}{Hot VS Cold}
                     \begin{itemize}
                         \item
                             Uno \engEmph{stream} si definisce \textbf{\engEmph{cold}} se l'\texttt{Observable} genera il produttore dei valori nel flusso; per esempio:
 
-                            \inputminted{js}{res/cold_observable.js}
+                            \inputminted{js}{src/cold_observable.js}
 
                         \item
                             Uno \engEmph{stream} si definisce \textbf{\engEmph{hot}} se l'\texttt{Observable} racchiude il produttore dei valori nel flusso; per esempio:
 
-                            \inputminted{js}{res/hot_observable.js}
+                            \inputminted{js}{src/hot_observable.js}
                     \end{itemize}
                 \end{block}
             \end{frame}
@@ -429,31 +432,84 @@
             \subsubsection{.pipe()}\label{subsub:pipe}
 
             \begin{frame}{\insertsubsectionhead}{\nameref{subsub:observable}}
-                \begin{block}{\texttt{\insertsubsubsectionhead}}
+                \begin{block}{\texttt{\insertsubsubsectionhead}}<1->
                     \begin{itemize}
-                        \item Pippo
+                        \item
+                            A partire da RxJS 5.5, sono stati introdotti i \engEmph{pipable operators}
+                        \item
+                            da RxJS 6, essi sono gli operatori standard, trovabili in \texttt{rxjs/operators}
+                        \item
+                            l'operatore \texttt{.pipe()} prende un infinito numero di argomenti, che sono funzioni applicabili allo stream; ad esempio:
+
+                            \inputminted{js}{src/pipe.js}
+                            % \begin{figure}
+                            %
+                            %     \caption{Lo stream emette numeri incrementali ogni 350ms e completa dopo il 25° valore; essi sono mappati con una funzione gaussiana e convertiti in una serie di caratteri ``•''}
+                            % \end{figure}
+
                     \end{itemize}
                 \end{block}
+                \only<2 | handout 0> {
+                    \begin{tikzpicture}[remember picture,overlay]
+                        \node[at=(current page.center)] {
+                            \includegraphics[width=.8\paperwidth, height=.8\paperheight]{pipe_meme}
+                        };
+                    \end{tikzpicture}
+                }
             \end{frame}
 
             \subsubsection{.map()}\label{subsub:map}
 
-            \begin{frame}{\insertsubsectionhead}{\nameref{subsub:observable}}
+            \begin{frame}{\insertsubsectionhead}{\nameref{subsub:observable}: Pipable operators}
                 \begin{block}{\texttt{\insertsubsubsectionhead}}
                     \begin{itemize}
-                        \item Pippo
+                        \item
+                            simile alla funzione \texttt{.map()} degli array
+                        \item
+                            applica una \textbf{funzione proiezione} ad ogni valore emesso dall'\texttt{Observable} sorgente ed emette i valori risultanti come \texttt{Observable}
+                        \item
+                            utile per il parsing di JSON
                     \end{itemize}
                 \end{block}
+
             \end{frame}
 
-            \subsubsection{.reduce()}\label{subsub:reduce}
+            \begin{frame}[fragile]{\insertsubsectionhead}{\nameref{subsub:observable}: Pipable operators: \texttt{\insertsubsubsectionhead}}
+                \inputminted{js}{src/map.js}
+                \includegraphics[width=\linewidth]{map}
+            \end{frame}
+
+            \subsubsection{.reduce() \& .scan()}\label{subsub:reduce}
 
             \begin{frame}{\insertsubsectionhead}{\nameref{subsub:observable}}
-                \begin{block}{\texttt{\insertsubsubsectionhead}}
+                \begin{block}{\texttt{.reduce()}}
                     \begin{itemize}
-                        \item Pippo
+                        \item
+                            simile alla funzione \texttt{.reduce()} degli array
+                        \item
+                            applica una \textbf{funzione accumulatore} sull'\texttt{Observable} sorgente e ritorna il risultato una volta che la sorgente termina
                     \end{itemize}
                 \end{block}
+
+                \begin{block}{\texttt{.scan()}}
+                    \begin{itemize}
+                        \item
+                            applica una \textbf{funzione accumulatore} sull'\texttt{Observable} sorgente e ritorna ogni risultato intermedio
+                        \item
+                            simile alla \texttt{.reduce()}, ma emette un valore ad ogni valore emesso dalla sorgente anziché attenderne il completamento
+                    \end{itemize}
+                \end{block}
+
+            \end{frame}
+
+            \begin{frame}[fragile]{\insertsubsectionhead}{\nameref{subsub:observable}: Pipable operators: \texttt{\insertsubsubsectionhead}}
+                \inputminted{js}{src/reduce.js}
+                \includegraphics[width=\linewidth]{reduce}
+            \end{frame}
+
+            \begin{frame}[fragile]{\insertsubsectionhead}{\nameref{subsub:observable}: Pipable operators: \texttt{\insertsubsubsectionhead}}
+                \inputminted{js}{src/scan.js}
+                \includegraphics[width=\linewidth]{scan}
             \end{frame}
 
             \subsubsection{.tap()}\label{subsub:tap}
@@ -461,19 +517,63 @@
             \begin{frame}{\insertsubsectionhead}{\nameref{subsub:observable}}
                 \begin{block}{\texttt{\insertsubsubsectionhead} (precedentemente \texttt{.do()})}
                     \begin{itemize}
-                        \item Pippo
+                        \item
+                            la versione ``\engEmph{pipable}'' è stata rinominata da \texttt{.do()} a \texttt{.tap()} per conflitto di nomi con funzioni standard di JavaScript
+                        \item
+                            esegue un \engEmph{side effect} per ogni valore emesso dall'\texttt{Observable} sorgente, ma lo ritorna invariato
+                        \item
+                            estremamente utile in fase di debug
                     \end{itemize}
                 \end{block}
             \end{frame}
 
-            \subsubsection{.debounce() \& .throttle()}\label{subsub:debounce}
+            \begin{frame}[fragile]{\insertsubsectionhead}{\nameref{subsub:observable}: Pipable operators: \texttt{\insertsubsubsectionhead}}
+                \inputminted{js}{src/tap.js}
+                \includegraphics[width=\linewidth]{tap}
+            \end{frame}
+
+            \subsubsection{.debounce() \& .debounceTime()}\label{subsub:debounce}
 
             \begin{frame}{\insertsubsectionhead}{\nameref{subsub:observable}}
                 \begin{block}{\texttt{\insertsubsubsectionhead}}
                     \begin{itemize}
-                        \item Pippo
+                        \item
+                            Permettono di filtrare gli eventi emessi dall'\texttt{Observable} sorgente, emettendo un valore solo dopo che è passato un certo numero di millisecondi da quando non sono stati emessi valori
+                        \item
+                            \texttt{.debounceTime()} permette di specificare il lasso di tempo entro il quale effettuare il \engEmph{debounce}
+                        \item
+                            \texttt{.debounce()} si comporta come \texttt{.debounceTime()}, ma il periodo di silenzio è determinato da un altro \texttt{Observable}
+                        \item
+                            utili per attendere che l'utente abbia terminato di fare qualcosa con un componente osservato prima di gestire l'evento
                     \end{itemize}
                 \end{block}
+            \end{frame}
+
+            \begin{frame}[fragile]{\insertsubsectionhead}{\nameref{subsub:observable}: Pipable operators: \texttt{.debounceTime()}}
+                % \inputminted{js}{src/debounceTime.js}
+                \includegraphics[width=\linewidth]{debounceTime}
+            \end{frame}
+
+            \subsubsection{.throttle() \& .throttleTime()}\label{subsub:throttle}
+
+            \begin{frame}{\insertsubsectionhead}{\nameref{subsub:observable}}
+                \begin{block}{\texttt{\insertsubsubsectionhead}}
+                    \begin{itemize}
+                        \item
+                            Permettono di filtrare gli eventi emessi dall'\texttt{Observable} sorgente, emettendo un valore solo ogni un certo lasso di tempo
+                        \item
+                            \texttt{.throttleTime()} emette un valore dall'\texttt{Observable} sorgente ed ignora ulteriori valori per i millisecondi specificati
+                        \item
+                            \texttt{.throttle()} si comporta come \texttt{.throttleTime()}, ma il periodo di silenzio è determinato da un altro \texttt{Observable}
+                        \item
+                            utili per ridurre il numero di input a livelli accettabili
+                    \end{itemize}
+                \end{block}
+            \end{frame}
+
+            \begin{frame}[fragile]{\insertsubsectionhead}{\nameref{subsub:observable}: Pipable operators: \texttt{.throttleTime()}}
+                % \inputminted{js}{src/throttleTime.js}
+                \includegraphics[width=\linewidth]{throttleTime}
             \end{frame}
 
             \subsubsection{.catchError()}\label{subsub:catch}
