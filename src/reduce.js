@@ -1,4 +1,4 @@
-const source = from([1, 2, 3])
+const source = from([1, 3, 5])
     .pipe(
         reduce((acc, curr) => acc + curr, 0)
     );
